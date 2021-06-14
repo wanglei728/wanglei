@@ -121,9 +121,6 @@ class BaesTest:
         # 2、调用登录
         response = requests.request(method="post", url=url_login, headers=headers, data=params)
         res = response.json()
-        print(url_login)
-        print(response.request.headers)
-        print(response.request.body)
         print(res)
 
 
