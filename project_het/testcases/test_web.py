@@ -17,7 +17,7 @@ from project_het.testcases.fixture import BaesTest
 
 @ddt
 class TestWeb(unittest.TestCase, BaesTest):
-    # 获取exce测试用例数据
+    # 创建excel对象
     excel = HandlerExcel(filename=os.path.join(DATA_DIR, "cases_data.xlsx"), sheetname="web")
     cases_data = excel.read_excel()
 
@@ -54,16 +54,16 @@ class TestWeb(unittest.TestCase, BaesTest):
 
     @list_data(cases_data)
     def test_web(self, item):
-        # 第一步：测试数据（url，method，headers，params,expected）
+        # 测试数据（url，method，headers，params,expected）
         url = my_config.get("env_release", "base_url") + item["url"]
         method = item["method"].lower()
         headers = {"content-type": item["content-type"]}
         expected = eval(item["expected"])
-        # excel测试入参数据，试用前通过正则方法进行替换
+        # excel格式化参数替换
         item["data"] = replace_excel_data(cases_data=item["data"], cls=TestWeb)
         params = eval(item["data"])
 
-        # 第二步：根据content-type格式判断入参关键字，获取测试结果
+        # 判断入参关键字，获取测试结果
         if item["method"].lower() == "get" or item["method"].lower() is None:
             response = self.s.request(method=method, url=url, params=params, headers=headers)
         elif item["content-type"] == "application/json":
@@ -72,16 +72,14 @@ class TestWeb(unittest.TestCase, BaesTest):
             response = self.s.request(method=method, url=url, data=params, headers=headers)
         res = response.json()
 
-        # 第三步：try语句断言判断
+        # try断言
         try:
             self.assertEqual(expected["code"], res["code"])
         except AssertionError as e:
-            # 错误日志打印
             my_log.error("---用例---【{}】---执行失败".format(item["title"]))
             my_log.exception(e)
             # 测试结果写入excel
             self.excel.write_excel(row=item["case_id"] + 1, column=9, value="失败")
-            # 抛出异常
             raise e
         else:
             my_log.info("---用例---【{}】---执行成功".format(item["title"]))

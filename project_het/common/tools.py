@@ -13,7 +13,7 @@ from project_het.common.handler_config import my_config
 def replace_excel_data(cases_data, cls):
     """创建替换excel用例字段数据方法"""
     while re.search("#(.+?)#", cases_data):  # while循环控制查找excel测试用例数据有多少##格式字段
-        res = re.search("#(.+?)#", cases_data)  # 获取第一个该正则格式的字段
+        res = re.search("#(.+?)#", cases_data)  # 获取一个该正则格式的字段
         item = res.group()  # 获取被替换字段格式：#字段名#
         attr = res.group(1)  # 获取被替换字段名：字段名
         # try语句判断字段是在类属性 or 配置文件

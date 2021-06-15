@@ -41,6 +41,6 @@ class HandlerExcel:
 
 
 if __name__ == '__main__':
-    excel = HandlerExcel(filename=r"D:\PyCharm\hetproject\project_het\datas\cases_data.xlsx", sheetname="web")
+    excel = HandlerExcel(filename=r"D:\PyCharm\hetproject\project_het\datas\cases_data.xlsx", sheetname="app")
     res = excel.read_excel()
     print(res)

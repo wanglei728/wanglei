@@ -7,6 +7,7 @@ import random
 import requests
 import jsonpath
 from project_het.common.handler_config import my_config
+from project_het.common.handler_sign import HandlerSign
 
 
 # noinspection PyUnresolvedReferences
@@ -106,22 +107,28 @@ class BaesTest:
     # --------app测试前置接口获取参数-----------
     @classmethod
     def app_login(cls):
-        """app登录接口前置"""
-        # 1、测试数据准备（url，method，headers，params）
+        """app登录接口获取token"""
+        # 测试数据（url，method，headers，params）
         url_login = my_config.get("env_release", "base_urlapp") + "/v1/account/login"
-        headers = eval(my_config.get("env_release", "headers_login"))
         params = {
             "account": my_config.getint("env_release", "account"),
-            "password": my_config.get("env_release", "password"),
-            "appId": my_config.get("env_release", "appId"),
-            "timestamp": 1623655964583,
-            "sign": "dbfccc6a503144ec54649ad5bf3b1bae"
-        }
-
+            "password": my_config.get("env_release", "password_app"),
+            "appId": my_config.get("env_release", "appId")}
+        # 调用获取sign类获取签名
+        sign = HandlerSign(method="POST",
+                           url=url_login,
+                           data={"account": my_config.getint("env_release", "account"),
+                                 "appId": my_config.get("env_release", "appId"),
+                                 "password": my_config.get("env_release", "password_app"),
+                                 "timestamp": int(time.time() * 1000)},
+                           appsecret=my_config.get("env_release", "appsecret"))
+        my_sign = sign.md5_sign()
+        params.update(my_sign)
         # 2、调用登录
-        response = requests.request(method="post", url=url_login, headers=headers, data=params)
+        response = requests.request(method="post", url=url_login, data=params)
         res = response.json()
-        print(res)
+        # 3、设置token为类属性
+        cls.accessToken = jsonpath.jsonpath(res, "$..accessToken")[0]
 
 
 if __name__ == '__main__':
@@ -133,4 +140,4 @@ if __name__ == '__main__':
     # a.get_by_dempid()
     a.app_login()
     # print(a.mobile_phone())
-    # print(BaesTest.__dict__)
+    print(BaesTest.__dict__)
