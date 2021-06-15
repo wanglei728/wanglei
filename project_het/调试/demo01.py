@@ -2,6 +2,7 @@
 @Time : 2021/6/13 18:29
 @Author : 
 """
+
 import requests
 # webhook地址
 url = "https://oapi.dingtalk.com/robot/send?access_token=2116b4" \
@@ -19,6 +20,10 @@ data = {
 }
 
 # 发送请求获取结果
-res = requests.post(url=url, json=data)
-print(res.text)
+# res = requests.post(url=url, json=data)
+# print(res.text)
+
+
+
+
 
