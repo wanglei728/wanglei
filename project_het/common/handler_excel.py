@@ -34,9 +34,9 @@ class HandlerExcel:
         # 第一步：创建excel工作簿和表单对象
         workbook = openpyxl.load_workbook(filename=self.filename)
         sheet = workbook[self.sheetname]
-        # 第二步：通过cell格子对象指定excel写入位置和内容
+        # 第二步：通过cell格子对象写入
         sheet.cell(row=row, column=column, value=value)
-        # 第三步：写入成功，进行文件保存（调用写入方法，文件必须处于关闭状态）
+        # 第三步：写入成功，进行文件保存
         workbook.save(self.filename)
 
 

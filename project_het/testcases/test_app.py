@@ -2,10 +2,9 @@
 @Time : 2021/6/15 22:26
 @Author : 
 """
-import os
+import os, time
 import unittest
 import requests
-import time
 from unittestreport import ddt, list_data
 from project_het.common.handler_excel import HandlerExcel
 from project_het.common.handler_logs import my_log
@@ -35,7 +34,6 @@ class TestApp(unittest.TestCase, BaesTest):
         # excel格式化参数替换
         item["data"] = replace_excel_data(item["data"], TestApp)
         params = eval(item["data"])
-        print(params)
 
         # 调用被测接口
         if item["method"].lower() == "get" or item["method"].lower() is None:

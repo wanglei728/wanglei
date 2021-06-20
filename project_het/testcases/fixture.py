@@ -20,7 +20,7 @@ class BaesTest:
         # *登录接口用例执行前置方法获取登录cookie（Python中采用session会话对象获取session）
         cls.s = requests.session()
 
-        # 第一步：测试数据准备（url，method，headers，params）
+        # 1、测试数据准备（url，method，headers，params）
         url_login = "".join(
             (my_config.get("env_release", "base_url"), "/v4/web/exhibitionhall/common/admin/loginCheck"))
         headers = eval(my_config.get("env_release", "headers_login"))
@@ -29,12 +29,11 @@ class BaesTest:
             "password": my_config.get("env_release", "password"),
             "_": int(time.time() * 1000)
         }
-        # 第二步：调用登录接口
+        # 2、调用登录接口
         response = cls.s.post(url=url_login, headers=headers, data=params)
         res = response.json()
-        # print(res)
 
-        # 第三步：保存前置接口的参数为类属性，方便后续接口调用
+        # 3、保存前置接口的参数为类属性，方便后续接口调用
         cls.account = jsonpath.jsonpath(res, "$..userName")[0]
 
     @classmethod
@@ -45,10 +44,7 @@ class BaesTest:
         # 调用接口获取返回数据
         response = cls.s.get(url=url)
         res = response.json()
-        # print(res)
-        # 提取参数tenantId
         cls.tenantId = jsonpath.jsonpath(res, "$..tenantId")[0]
-        # print(cls.tenantId)
 
     @classmethod
     def select_role_list(cls):
@@ -65,8 +61,6 @@ class BaesTest:
         cls.roleId = jsonpath.jsonpath(res, "$..list[?(@.roleName=='角色自动化测试')][roleId]")[0]
         cls.roles = jsonpath.jsonpath(res, "$..list[0][roleId]")[0]
         cls.fkRoleId = jsonpath.jsonpath(res, "$..list[?(@.roleName=='角色自动化测试')][roleId]")[0]
-        # print(res)
-        # print(cls.fkRoleId)
 
     @classmethod
     def get_dept_list(cls):
@@ -75,10 +69,7 @@ class BaesTest:
         params = {"tenantId": cls.tenantId}
         response = cls.s.get(url=url, params=params)
         res = response.json()
-        # print(res)
-        # 提取字段dempId
         cls.dempId = jsonpath.jsonpath(res, "$..dempList[?(@.dempName=='美容院测试门店账户')][dempId]")[0]
-        # print(cls.dempId)
 
     @classmethod
     def get_by_dempid(cls):
@@ -104,7 +95,7 @@ class BaesTest:
             cls.userLogin += j
         return cls.userLogin
 
-    # --------app测试前置接口获取参数-----------
+    # -----------------------------app测试前置接口获取参数----------------------------
     @classmethod
     def app_login(cls):
         """app登录接口获取token"""
@@ -114,7 +105,7 @@ class BaesTest:
             "account": my_config.getint("env_release", "account"),
             "password": my_config.get("env_release", "password_app"),
             "appId": my_config.get("env_release", "appId")}
-        # 调用获取sign类获取签名
+        # 创建前面sign对象
         sign = HandlerSign(method="POST",
                            url=url_login,
                            data={"account": my_config.getint("env_release", "account"),
@@ -122,8 +113,7 @@ class BaesTest:
                                  "password": my_config.get("env_release", "password_app"),
                                  "timestamp": int(time.time() * 1000)},
                            appsecret=my_config.get("env_release", "appsecret"))
-        my_sign = sign.md5_sign()
-        params.update(my_sign)
+        params.update(sign.md5_sign())
         # 2、调用登录
         response = requests.request(method="post", url=url_login, data=params)
         res = response.json()

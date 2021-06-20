@@ -2,9 +2,7 @@
 @Time : 2021/6/12 11:36
 @Author : 
 """
-import os
-import time
-import requests
+import os, time
 import unittest
 from unittestreport import ddt, list_data
 from project_het.common.handler_excel import HandlerExcel
@@ -23,28 +21,7 @@ class TestWeb(unittest.TestCase, BaesTest):
 
     @classmethod
     def setUpClass(cls) -> None:
-
-        # # 登录接口用例执行前置方法获取登录cookie（Python中采用session会话对象获取session）
-        # cls.s = requests.session()
-        #
-        # # 第一步：测试数据准备（url，method，headers，params）
-        # url_login = "".join(
-        #     (my_config.get("env_release", "base_url"), "/v4/web/exhibitionhall/common/admin/loginCheck"))
-        # headers = eval(my_config.get("env_release", "headers_login"))
-        # params = {
-        #     "username": my_config.get("env_release", "username"),
-        #     "password": my_config.get("env_release", "password"),
-        #     "_": int(time.time() * 1000)
-        # }
-        # # 第二步：调用登录接口
-        # response = cls.s.post(url=url_login, headers=headers, data=params)
-        # # print(response.json())
-        #
-        # # 第三步：保保存前置接口的参数为类属性，方便后续接口调用
-        # cls.account = my_config.get("env_release", "username")
-        #
-        # # -----------调用前置方法获取类属性------------
-        # 通过继承前置接口获取类属性
+        # 继承前置接口,参数传递
         cls.web_login()
         cls.get_session_account()
         cls.select_role_list()

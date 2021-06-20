@@ -13,7 +13,7 @@ res = {'code': 0,
             'reg_time': '2021-05-26 20:11:16.0', 'type': 1,
             'token_info':
                 {'token_type': 'fksdjf', 'expires_in': '2020-05-16 15:51:46',
-                 'token': 'wNn5-7MAhvie5JprQDsD_iIvU5RP77zaNi5SYFT10EQ'}}
+                 'token': 'wNn58888887MAhvie5JprQDsD_iIvU5RP77zaNi5SYFT10EQ'}}
        }
 
 # 1、正则获取token(注意json返回的字典格式中存在空格，匹配时去空格)
@@ -30,4 +30,7 @@ p4 = re.findall(r"'id':\s(\d+)", str(res))[0]
 print(p4)
 
 # 4、通过jsonpath获取token
-print(jsonpath.jsonpath(res, "$..token"))
+print(jsonpath.jsonpath(res, "$..token")[0])
+
+
+
