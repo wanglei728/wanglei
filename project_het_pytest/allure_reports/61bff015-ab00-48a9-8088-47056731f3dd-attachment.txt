@@ -1,2 +1,0 @@
-INFO - ------------------------------------------------------
-INFO - Func test_app[item2] in file: D:\PyCharm\hetproject\project_het_pytest\testcases\test_app.py

@@ -14,14 +14,12 @@ class HandlerExcel:
         self.sheetname = sheetname
 
     def read_excel(self):
-        # 第一步：创建excel工作簿和表单对象
+        # 1、创建excel工作簿和表单对象
         workbook = openpyxl.load_workbook(filename=self.filename)
         sheet = workbook[self.sheetname]
-
-        # 第二步：按行读取excel所有数据并转化为list
+        # 2、：按行读取excel所有数据并转化为list
         excel_data = list(sheet.rows)
-
-        # 第三步：excel数据转化为测试用例数据格式（list中元素是dict格式）
+        # 3、：excel数据转化为测试用例数据格式（list中元素是dict格式）
         cases = []
         list_1 = [c.value for c in excel_data[0]]
         for item in excel_data[1:]:
@@ -31,12 +29,9 @@ class HandlerExcel:
         return cases
 
     def write_excel(self, row, column, value):
-        # 第一步：创建excel工作簿和表单对象
         workbook = openpyxl.load_workbook(filename=self.filename)
         sheet = workbook[self.sheetname]
-        # 第二步：通过cell格子对象写入
         sheet.cell(row=row, column=column, value=value)
-        # 第三步：写入成功，进行文件保存
         workbook.save(self.filename)
 
 

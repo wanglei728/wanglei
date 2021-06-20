@@ -1,3 +1,0 @@
-INFO - ------------------------------------------------------
-INFO - Func test_app[item2] in file: D:\PyCharm\hetproject\project_het_pytest\testcases\test_app.py
-2021-06-19 18:47:13,300---test_app.py---84--- INFO:---用例---【获取顾客列表】---执行成功

@@ -1,3 +1,0 @@
-INFO - ------------------------------------------------------
-INFO - Func test_app[item0] in file: D:\PyCharm\hetproject\project_het_pytest\testcases\test_app.py
-2021-06-19 18:57:23,398---test_app.py---55--- INFO:---用例---【品牌介绍接口】---执行成功

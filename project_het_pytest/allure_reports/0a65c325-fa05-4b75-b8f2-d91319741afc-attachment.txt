@@ -1,3 +1,0 @@
-INFO     Test:__init__.py:90 ------------------------------------------------------
-INFO     Test:__init__.py:91 Func test_app[item1] in file: D:\PyCharm\hetproject\project_het_pytest\testcases\test_app.py
-INFO     test2021:test_app.py:84 ---用例---【顾客管理密码验证】---执行成功
